@@ -188,11 +188,6 @@
 
 /********************** inclusions *******************************************/
 
-/* C Preprocessors (https://www.geeksforgeeks.org/) */
-/*
- * The #include preprocessor directive is used to include the header files in
- * the C program.
- */
 /* Project includes. */
 #include "main.h"
 
@@ -202,147 +197,30 @@
 
 /* Application & Tasks includes. */
 #include "board.h"
-#include "task_a.h"
-#include "task_b.h"
-#include "task_c.h"
 
 /********************** macros and definitions *******************************/
 
-/* #define in C (https://www.geeksforgeeks.org/) */
-/* Macros and its types in C (https://www.geeksforgeeks.org/) */
-/*
- * In C programming, #define is a preprocessor directive that is used to define
- * macros. The macros are the identifiers defined by #define which are replaced
- * by their value before compilation. We can define constants and functions
- * like macros using #define. The generics in C are also implemented using the
- * #define preprocessor directive along with _Generic.
- *
- * In C, a macro is a piece of code in a program that is replaced by the value
- * of the macro. Macro is defined by #define directive. Whenever a macro name
- * is encountered by the compiler, it replaces the name with the definition of
- * the macro. Macro definitions need not be terminated by a semi-colon(;).
- */
 #define G_APP_CNT_INI	0u
-#define TASK_QTY 		3u
-
-/* C Structures (https://www.geeksforgeeks.org/) */
-/*
- * The structure in C is a user-defined data type that can be used to group
- * items of possibly different types into a single type. The struct keyword is
- * used to define the structure in the C programming language. The items in
- * the structure are called its member and they can be of any valid data type.
- */
-
-/* Function Pointer in C - How to declare a pointer to a function?
- * (https://www.geeksforgeeks.org/)
- */
-/*
- * In C, like normal data pointers (int *, char *, etc), we can have
- * pointers to functions.
- *
- * While a pointer to a variable or an object is used to access them
- * indirectly, a pointer to a function is used to invoke a function indirectly.
- */
-typedef struct {
-	void (*p_task_x)(void *);	// Pointer to task
-								// (must be a 'void (void *)' function)
-	void *parameters;			// Pointer to parameters
-} task_x_t;
 
 /********************** internal data declaration ****************************/
-
-/* C Arrays (https://www.geeksforgeeks.org/) */
-/*
- * Array in C is one of the most used data structures in C programming. It is a
- * simple and fast way of storing multiple values under a single name.
- */
-task_x_t task_x_init_list[TASK_QTY]		= {{task_a_init, NULL},
-								  	  	   {task_b_init, NULL},
-										   {task_c_init, NULL}};
-
-task_x_t task_x_update_list[TASK_QTY]	= {{task_a_update, NULL},
-								  	  	   {task_b_update, NULL},
-										   {task_c_update, NULL}};
 
 /********************** internal functions declaration ***********************/
 
 /********************** internal data definition *****************************/
 
-/* Memory Layout of C Programs (https://www.geeksforgeeks.org/) */
-/* Storage Classes in C (https://www.geeksforgeeks.org/) */
-/* C Variables (https://www.geeksforgeeks.org/) */
-/* Constants in C (https://www.geeksforgeeks.org/) */
-/* Const Qualifier in C (https://www.geeksforgeeks.org/) */
-/*
- * The constants in C are the read-only variables whose values cannot be
- * modified once they are declared in the C program. The type of constant can
- * be an integer constant, a floating pointer constant, a string constant, or
- * a character constant. In C language, the const keyword is used to define the
- * constants.
- *
- * The qualifier const can be applied to the declaration of any variable to
- * specify that its value will not be changed (which depends upon where const
- * variables are stored, we may change the value of the const variable by
- * using a pointer).
- * The result is implementation-defined if an attempt is made to change a
- * const.
- * Using the const qualifier in C is a good practice when we want to ensure
- * that some values should remain constant and should not be accidentally
- * modified.
- */
-const char *p_sys	= " Bare Metal - Event-Triggered Systems (ETS)\r\n";
-const char *p_app	= " App - retarget_printf_to_Console\r\n";
+const char *p_sys	= " Bare Metal \r\n";
+const char *p_app	= " Analog Signal Reading - Polling \r\n";
 
 /********************** external data declaration *****************************/
 
-/* Memory Layout of C Programs (https://www.geeksforgeeks.org/) */
-/* Storage Classes in C (https://www.geeksforgeeks.org/) */
-/* C Variables (https://www.geeksforgeeks.org/) */
-/* Global Variables in C (https://www.geeksforgeeks.org/) */
-/*
- * A variable declared outside any function or a block of code is called a
- * global variable. Global variables are frequently used to permanently store
- * data in a defined scope where they can be accessed and manipulated.
- *
- * Global variables do not stay limited to a specific function, which means
- * that one can use any given function to access and modify the global
- * variables. The initialization of these variables occurs automatically to 0
- * during the time of declaration. Also, we generally write the global
- * variables before the main() function.
- */
 uint32_t g_app_cnt;
 
-/* Understanding “volatile” qualifier in C | Set 1 (Introduction)
- * Understanding “volatile” qualifier in C | Set 2 (Examples)
- * (https://www.geeksforgeeks.org/)
- */
-/*
- * The volatile keyword is intended to prevent the compiler from applying any
- * optimizations on objects that can change in ways that cannot be determined
- * by the compiler.
- * Objects declared as volatile are omitted from optimization because their
- * values can be changed by code outside the scope of current code at any time.
- * The system always reads the current value of a volatile object from the
- * memory location rather than keeping its value in a temporary register at the
- * point it is requested, even if a previous instruction asked for the value
- * from the same object.
- */
 volatile uint32_t g_tick_cnt;
 
 /********************** external functions definition ************************/
 
-/* Memory Layout of C Programs (https://www.geeksforgeeks.org/) */
-/* Storage Classes in C (https://www.geeksforgeeks.org/) */
-/* C Functions (https://www.geeksforgeeks.org/) */
-/*
- * The function definition consists of actual statements which are executed
- * when the function is called (i.e. when the program control comes to the
- * function).
- */
 void app_init(void)
 {
-	uint32_t index;
-
 	/* Print out: Application Initialized */
 	LOGGER_LOG("\r\n");
 	LOGGER_LOG("%s is running - Tick [mS] = %d\r\n", GET_NAME(app_init), (int)HAL_GetTick());
@@ -352,75 +230,23 @@ void app_init(void)
 
 	g_app_cnt = G_APP_CNT_INI;
 
-	/* Print out: Application execution counter */
-	LOGGER_LOG(" %s = %d\r\n", GET_NAME(g_app_cnt), (int)g_app_cnt);
-
-	for (index = 0; index < (sizeof(task_x_init_list)/sizeof(task_x_t)); index++)
-	{
-		/* C Functions (https://www.geeksforgeeks.org/) */
-		/*
-		 * A function call is a statement that instructs the compiler to execute
-		 * the function.
-		 * We use the function name and parameters in the function call.
-		 */
-		/* Run task_x_init */
-		(*task_x_init_list[index].p_task_x)(task_x_init_list[index].parameters);
-	}
-
 	cycle_counter_init();
+
 }
 
 void app_update(void)
 {
-	uint32_t index;
-	uint32_t cycle_counter;
-	uint32_t cycle_counter_time_us;
-
 	/* Update App Counter */
 	g_app_cnt++;
 
-    /* Print out: Application Update */
-	LOGGER_LOG("\r\n");
-	LOGGER_LOG("%s is running - Tick [mS] = %d\r\n", GET_NAME(app_update), (int)HAL_GetTick());
-
-	/* Print out: Application execution counter */
-	LOGGER_LOG(" %s = %d\r\n", GET_NAME(g_app_cnt), (int)g_app_cnt);
-
-	for (index = 0; index < (sizeof(task_x_update_list)/sizeof(task_x_t)); index++)
-	{
-		/* Print out: Cycle Counter Reset */
-		LOGGER_LOG("\r\n");
-		LOGGER_LOG(" %s\r\n", GET_NAME(cycle_counter_reset));
-
-		HAL_GPIO_TogglePin(LED_A_PORT, LED_A_PIN);
-		cycle_counter_reset();
-
-		/* C Functions (https://www.geeksforgeeks.org/) */
-		/*
-		 * A function call is a statement that instructs the compiler to execute
-		 * the function.
-		 * We use the function name and parameters in the function call.
-		 */
-		/* Run task_x_update */
-		(*task_x_update_list[index].p_task_x)(task_x_update_list[index].parameters);
-
-		cycle_counter = cycle_counter_get();
-		cycle_counter_time_us = cycle_counter_time_us();
-		HAL_GPIO_TogglePin(LED_A_PORT, LED_A_PIN);
-
-		/* Print out: Cycle Counter */
-		LOGGER_LOG(" %s: %lu - %s: %lu uS\r\n", GET_NAME(cycle_counter), cycle_counter, GET_NAME(cycle_counter_time_us), cycle_counter_time_us);
-	}
+	HAL_ADC_Start(&hadc1);
+    if (HAL_OK == HAL_ADC_PollForConversion(&hadc1, 100)){
+    	uint32_t value = HAL_ADC_GetValue(&hadc1);
+    	float temperature = (value * 3.3)/ 100;
+		LOGGER_LOG("Temperature = %d °C \r\n", (int) temperature);
+    }
 }
 
-/* Callbacks in C (https://www.geeksforgeeks.org/) */
-/*
- * A callback is any executable code that is passed as an argument to another
- * code, which is expected to call back (execute) the argument at a given time.
- * In simple language, If a reference of a function is passed to another
- * function as an argument to call it, then it will be called a Callback
- * function.
- */
 
 void HAL_SYSTICK_Callback(void)
 {
